@@ -3,6 +3,8 @@
 # S slice is ordered from top going towards the right
 # A U turn is actually a U' on a 3x3x3 Rubik's cube: this is because I'm stupid...
 
+from copy import copy
+
 class Sphere(object):
     
     def __init__(self):
@@ -60,7 +62,7 @@ class Sphere(object):
 class Turn(object):
     
     def __init__(self, mapping):
-        self.mapping = mapping
+        self.mapping = copy(mapping)
     
     def perform(self, sphere):
         result = Sphere()
@@ -117,3 +119,4 @@ class Turn(object):
             moves += [mRegular.inverse(), sRegular.inverse()]
         uTurn = Turn.generate_u()
         moves += [uTurn, uTurn.inverse(), uTurn.exp(2)]
+        return moves

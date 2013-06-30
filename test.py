@@ -27,6 +27,15 @@ def test_turns():
         if puzzle.pieces[i] != expected.pieces[i]:
             print("difference at " + str(i) + " in algo 2")
     print("test complete")
+    
+    # test M2
+    slice2 = sliceTurn.exp(2)
+    expected = [15, 32, 0, 1, 2, 3, 4, 5, 7, 33, 8, 9, 10, 11, 12, 13]
+    expected += range(16, 32)
+    expected += [14, 6]
+    for i in range(0, 34):
+        if slice2.mapping[i] != expected[i]:
+            print("difference in mapping at " + str(i))
 
 def test_choosemap():
     print("testing choosemap.Choice()")
