@@ -1,6 +1,7 @@
 # M slice color = 1, S slice = 2, top-bottom = 0
 # M slice is ordered from top going towards the front
 # S slice is ordered from top going towards the right
+# A U turn is actually a U' on a 3x3x3 Rubik's cube: this is because I'm stupid...
 
 class Sphere(object):
     
@@ -105,3 +106,14 @@ class Turn(object):
         turnData += [0, 1, 2, 3, 20, 21, 22, 23, 24, 25, 26, 27, 12, 13, 14, 15]
         turnData += [32, 33]
         return Turn(turnData)
+
+    @staticmethod
+    def basis():
+        moves = []
+        for i in range(1, 5):
+            mRegular = Turn.generate_m().exp(i)
+            sRegular = Turn.generate_s().exp(i)
+            moves += [mRegular, sRegular]
+            moves += [mRegular.inverse(), sRegular.inverse()]
+        uTurn = Turn.generate_u()
+        moves += [uTurn, uTurn.inverse(), uTurn.exp(2)]

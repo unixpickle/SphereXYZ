@@ -1,4 +1,5 @@
 import sphere
+import choosemap
 
 def test_turns():
     print("testing sphere.Turn()")
@@ -27,4 +28,19 @@ def test_turns():
             print("difference at " + str(i) + " in algo 2")
     print("test complete")
 
+def test_choosemap():
+    print("testing choosemap.Choice()")
+    choice = choosemap.Choice([True] * 8 + [False] * 9)
+    assert choice.count_choices() == 8
+    assert not choice.is_maximal()
+    numChoices = 1
+    while not choice.is_maximal():
+        assert choice.perfect_hash() == numChoices - 1
+        choice.increment()
+        numChoices += 1
+    assert choice.perfect_hash() == numChoices - 1
+    assert numChoices == 24310
+    print("test complete")
+
 test_turns()
+test_choosemap()
