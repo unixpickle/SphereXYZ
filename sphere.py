@@ -68,6 +68,23 @@ class Turn(object):
             result.pieces[i] = sphere.pieces[source]
         return result
     
+    def exp(self, exponent):
+        assert exponent >= 0
+        result = Turn(range(0, 34))
+        for x in range(0, exponent):
+            temp = Turn(result.mapping)
+            for i in range(0, 34):
+                source = self.mapping[i]
+                result.mapping[i] = temp.mapping[source]
+        return result
+    
+    def inverse(self):
+        result = Turn(range(0, 34))
+        for i in range(0, 34):
+            source = self.mapping[i]
+            result.mapping[source] = i
+        return result
+    
     @staticmethod
     def generate_m():
         turnData = [32, 0, 1, 2, 3, 4, 5, 6, 33, 8, 9, 10, 11, 12, 13, 14]
