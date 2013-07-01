@@ -1,9 +1,10 @@
 import choosemap
 import sphere
-from array import array
 import sys
 import struct
 import Queue
+from array import array
+from copy import copy
 
 class Indexer(object):
     
@@ -55,10 +56,9 @@ class Indexer(object):
         if depth == self.maxDepth: return True
         
         # expand the node by applying all Turns in our basis
+        dest = sphere.Sphere()
         for turn in self.basis:
-            nextNode = turn.perform(node)
-            if not self.has_expanded(nextNode):
-                self.queue.put((nextNode, depth + 1))
+            self.queue.put((turn.perform(node), depth + 1))
         
         return True
     

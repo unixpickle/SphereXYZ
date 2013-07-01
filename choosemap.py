@@ -85,6 +85,7 @@ class Choice(object):
                 for j in xrange(i + 2 + numMove, len(self.flags)):
                     self.flags[j] = 0
                 break
+        self.hash = None
     
     def cut_one_element(self):
         """Truncates from the left just enough to slice off the first 1"""
@@ -126,6 +127,7 @@ class ChoiceCache(object):
             while not start.is_maximal():
                 self.add_choice(copy(start))
                 start.increment()
+            self.add_choice(start)
     
     def add_choice(self, choice):
         bisect.insort_left(self.choices, choice)

@@ -4,22 +4,21 @@
 # A U turn is actually a U' on a 3x3x3 Rubik's cube: this is because I'm stupid...
 
 from copy import copy
+from array import array
 
 class Sphere(object):
     
-    def __init__(self):
-        self.pieces = [1]*16
-        self.pieces += [2]*16
-        self.pieces += [0, 0]
+    def __init__(self, pieces=None):
+        if pieces:
+            self.pieces = pieces
+        else:
+            ident = [1]*16
+            ident += [2]*16
+            ident += [0, 0]
+            self.pieces = array('B', ident);
     
-    def m_slice(self):
-        return self.pieces[:16]
-    
-    def s_slice(self):
-        return self.pieces[16:32]
-    
-    def tb_pieces(self):
-        return self.pieces[32:]
+    def __copy__(self):
+        return Sphere(copy(self.pieces))
     
     def __eq__(self, other):
         if isinstance(other, Sphere):
@@ -31,6 +30,15 @@ class Sphere(object):
         if result is NotImplemented:
             return result
         else: return not result
+    
+    def m_slice(self):
+        return self.pieces[:16]
+    
+    def s_slice(self):
+        return self.pieces[16:32]
+    
+    def tb_pieces(self):
+        return self.pieces[32:]
     
     def to_s(self):
         value = ''
@@ -56,7 +64,7 @@ class Sphere(object):
             values += [ord(char) - ord('0')]
         # create a sphere object
         sphere = Sphere()
-        sphere.pieces = values
+        sphere.pieces = array('B', values)
         return sphere
 
 class Turn(object):
@@ -70,6 +78,11 @@ class Turn(object):
             source = self.mapping[i]
             result.pieces[i] = sphere.pieces[source]
         return result
+    
+    def perform_to(self, sphere, out):
+        for i in range(0, 34):
+            source = self.mapping[i]
+            out.pieces[i] = sphere.pieces[source]
     
     def exp(self, exponent):
         assert exponent >= 0
