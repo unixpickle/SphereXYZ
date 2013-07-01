@@ -30,8 +30,8 @@ class Indexer(object):
     
     def has_expanded(self, aSphere):
         flags = []
-        for i in range(0, 34):
-            flags += [True if aSphere.pieces[i] == 1 else False]
+        for i in aSphere.pieces:
+            flags += [True if i == 1 else False]
         index = choosemap.Choice(flags).perfect_hash(self.cache)
         value = self.buffer[index]
         if value == 255: return False
@@ -45,8 +45,8 @@ class Indexer(object):
         self.depth = depth
         # set the value in the pruning table
         flags = []
-        for i in range(0, 34):
-            flags += [True if node.pieces[i] == 1 else False]
+        for i in node.pieces:
+            flags += [True if i == 1 else False]
         index = choosemap.Choice(flags).perfect_hash(self.cache)
         if self.buffer[index] != 255: return True
         else: self.buffer[index] = depth

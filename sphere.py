@@ -133,3 +133,9 @@ class Turn(object):
         uTurn = Turn.generate_u()
         moves += [uTurn, uTurn.inverse(), uTurn.exp(2)]
         return moves
+    
+    @staticmethod
+    def basis_labels():
+        return ['M', 'S', 'Mi', 'Si', 'M2', 'S2', 'Mi2', 'Si2',
+                'M3', 'S3', 'Mi3', 'Si3', 'M4', 'S4', 'Mi4', 'Si4',
+                'Ui', 'U', 'U2']
